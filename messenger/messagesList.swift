@@ -29,13 +29,17 @@ class msgsVC: UICollectionViewController, UICollectionViewDelegateFlowLayout {
         return view
     }()
     
-    let textField: UITextField = {
-        let view = UITextField()
+    let inputBubble: UIView = {
+        let view = UIView()
         view.layer.cornerRadius = 15
         view.backgroundColor = bubbleGray
-        view.contentMode = .scaleAspectFill
         view.layer.masksToBounds = true
-        
+        return view
+    }()
+    
+    let textField: UITextField = {
+        let view = UITextField()
+        view.backgroundColor = .clear
         view.placeholder = "Aa"
         view.font = font16
         view.textColor = .black
@@ -133,51 +137,81 @@ class msgsVC: UICollectionViewController, UICollectionViewDelegateFlowLayout {
 
 //            cell.imgName.image = UIImage(named: imgName)
         if let msg = msgs?[indexPath.item] {
-            setBubbleFrame(msg: msg, cell: cell, indexPath: indexPath)
+            if msg.type == "MSG" {
+                setBubbleFrame(msg: msg, cell: cell, indexPath: indexPath)
+            } else if msg.type == "IMG" {
+                setImgBubbleFrame(msg: msg, cell: cell, indexPath: indexPath)
+            }
         }
         
         return cell
     }
     
     func setBubbleFrame(msg: Message, cell: msgCell, indexPath: IndexPath) {
-        let frame = estimateSize(msg: msg.data!)
+        let frame = estimateSize(msg: msg)
         
         if msg.sender {
-            cell.msg.frame = CGRect(x: 30, y: 0, width: frame.width + 20, height: frame.height + 20)
-            cell.bubble.frame = CGRect(x: 20, y: 0, width: frame.width + 30, height: frame.height + 20)
-            cell.bubbleTrail.frame = CGRect(x: 10, y: frame.height + 15, width: 10, height: 10)
-            cell.bubble.backgroundColor = bubbleGray
-            cell.bubbleTrail.backgroundColor = bubbleGray
-            cell.msg.textColor = .black
-            if (msgs?.count ?? 0)-1 >= indexPath.item + 1 {
-                if let next = msgs?[indexPath.item + 1] {
-                    if next.sender {
-                        cell.bubbleTrail.isHidden = true
-                    }
-                }
-            }
+            cell.bubble.frame = CGRect(x: 20, y: 0, width: frame.width + 30,
+                                       height: frame.height + 20)
+            checkNext(cell: cell, indexPath: indexPath, isSender: true)
         } else {
-            cell.msg.frame = CGRect(x: view.frame.width - frame.width - 10, y: 0, width: frame.width, height: frame.height + 20)
-            cell.bubble.frame = CGRect(x: view.frame.width - frame.width - 15, y: 0, width: frame.width, height: frame.height + 20)
-            cell.bubbleTrail.frame = CGRect(x: view.frame.width - 15, y: frame.height + 15, width: 10, height: 10)
-            cell.bubble.backgroundColor = fbSky
-            cell.bubbleTrail.backgroundColor = fbSky
-            cell.msg.textColor = .white
-            if (msgs?.count ?? 0)-1 >= indexPath.item + 1 {
-                if let next = msgs?[indexPath.item + 1] {
-                    if !next.sender {
-                        cell.bubbleTrail.isHidden = true
-                    }
+            cell.bubble.frame = CGRect(x: view.frame.width - frame.width - 15, y: 0,
+                                       width: frame.width, height: frame.height + 20)
+            checkNext(cell: cell, indexPath: indexPath, isSender: false)
+        }
+
+        setRelativeFrame(cell: cell, frame: cell.bubble.frame, sender: msg.sender)
+    }
+    
+    func setImgBubbleFrame(msg: Message, cell: msgCell, indexPath: IndexPath) {
+        let image = UIImage(named: msg.data!)
+        if msg.sender {
+            cell.img.image = UIImage.setImgMsg(img: image!, x: 0, y: 0)
+            cell.img.frame = CGRect(x: 20, y: 0, width: (cell.img.image?.size.width)!,
+                                    height: (cell.img.image?.size.height)!)
+            checkNext(cell: cell, indexPath: indexPath, isSender: true)
+        } else {
+            cell.img.image = UIImage.setImgMsg(img: image!, x: view.frame.width - screenW - 15, y: 0)
+            cell.img.frame = CGRect(x: view.frame.width - screenW - 15, y: 0,
+                                    width: (cell.img.image?.size.width)!,
+                                    height: (cell.img.image?.size.height)!)
+            checkNext(cell: cell, indexPath: indexPath, isSender: false)
+        }
+        
+        setDetailsFrame(cell: cell, frame: cell.bubble.frame, sender: msg.sender)
+    }
+    
+    func checkNext(cell: msgCell, indexPath: IndexPath, isSender: Bool) {
+        if (msgs?.count ?? 0)-1 >= indexPath.item + 1 {
+            if let next = msgs?[indexPath.item + 1] {
+                if next.sender == isSender {
+                    cell.bubbleTrail.isHidden = true
                 }
             }
         }
     }
     
+    func setRelativeFrame(cell: msgCell, frame: CGRect, sender: Bool) {
+        cell.msg.frame = CGRect(x: frame.minX + 10, y: frame.minY, width: frame.width - 20, height: frame.height - 10)
+        cell.bubble.backgroundColor = (sender) ? bubbleGray : fbSky
+        cell.msg.textColor = (sender) ? .black : .white
+        setDetailsFrame(cell: cell, frame: frame, sender: sender)
+    }
+    
+    func setDetailsFrame(cell: msgCell, frame: CGRect, sender: Bool) {
+        let trailX = (sender) ? frame.minX - 10 : frame.minX + frame.width
+        cell.bubbleTrail.frame = CGRect(x: trailX, y: frame.height - 5, width: 10, height: 10)
+        cell.bubbleTrail.backgroundColor = (sender) ? bubbleGray : fbSky
+    }
+    
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        
-        if let msg = msgs?[indexPath.item].data {
+        if let msg = msgs?[indexPath.item] {
             let frame = estimateSize(msg: msg)
-            return CGSize(width: view.frame.width, height: frame.height + 20)
+            if (msg.type == "MSG") {
+                return CGSize(width: view.frame.width, height: frame.height + 20)
+            } else if (msg.type == "IMG") {
+                return CGSize(width: view.frame.width, height: frame.height)
+            }
         }
         
         return CGSize(width: view.frame.width, height: 100)
@@ -187,9 +221,44 @@ class msgsVC: UICollectionViewController, UICollectionViewDelegateFlowLayout {
         return UIEdgeInsets(top: 8, left: 0, bottom: 0, right: 0)
     }
     
-    func estimateSize(msg: String) -> CGRect {
-        return NSString(string: msg).boundingRect(with: CGSize(width: 250, height: 1000),
-                                                  options: NSStringDrawingOptions.usesFontLeading.union(.usesLineFragmentOrigin),
-                                                  attributes: [NSAttributedString.Key.font: font16], context: nil)
+    func estimateSize(msg: Message) -> CGRect {
+        if msg.type == "MSG" {
+            return NSString(string: msg.data!).boundingRect(with: CGSize(width: screenW, height: 1000),
+                                                            options: NSStringDrawingOptions.usesFontLeading.union(.usesLineFragmentOrigin),
+                                                            attributes: [NSAttributedString.Key.font: font16], context: nil)
+        } else if msg.type == "IMG" {
+            return getImgSize(msg: msg)
+        }
+        
+        return CGRect()
+    }
+    
+    func getImgSize(msg: Message) -> CGRect {
+        let image = UIImage(named: msg.data!)
+        if msg.sender {
+            let resized = UIImage.setImgMsg(img: image!, x: 0, y: 0)
+            return CGRect(x: 20, y: 0, width: resized.size.width, height: resized.size.height)
+        } else {
+            let resized = UIImage.setImgMsg(img: image!, x: view.frame.width - screenW - 15, y: 0)
+            return CGRect(x: view.frame.width - screenW - 15, y: 0, width: resized.size.width, height: resized.size.height)
+        }
+    }
+}
+
+extension UIImage {
+    func resize(x: CGFloat, y: CGFloat, w: CGFloat, h: CGFloat) -> UIImage {
+        let targetSize = CGSize.init(width: w, height: h)
+        return UIGraphicsImageRenderer(size:targetSize).image { _ in
+            let location = CGPoint.init(x: x, y: y)
+            self.draw(in: CGRect(origin: location, size: targetSize))
+        }
+    }
+    
+    static func setImgMsg(img: UIImage, x: CGFloat, y: CGFloat) -> UIImage {
+        let w = img.size.width
+        let h = img.size.height
+        
+        let newH = (screenW/w)*h
+        return img.resize(x: 0, y: 0, w: screenW, h: newH)
     }
 }

@@ -10,10 +10,11 @@
         <attribute name="read" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
         <attribute name="sender" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
         <attribute name="time" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="type" optional="YES" attributeType="String"/>
         <relationship name="friend" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Friend" inverseName="message" inverseEntity="Friend"/>
     </entity>
     <elements>
         <element name="Friend" positionX="-405.42578125" positionY="5.4765625" width="128" height="88"/>
-        <element name="Message" positionX="-178.8203125" positionY="227.6328125" width="128" height="118"/>
+        <element name="Message" positionX="-178.8203125" positionY="227.6328125" width="128" height="133"/>
     </elements>
 </model>

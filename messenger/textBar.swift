@@ -14,7 +14,8 @@ extension msgsVC {
         typeView.addSubview(curLocButton)
         typeView.addSubview(cameraButton)
         typeView.addSubview(galleryButton)
-        typeView.addSubview(textField)
+        typeView.addSubview(inputBubble)
+        inputBubble.addSubview(textField)
         typeView.addSubview(emojiButton)
         typeView.addSubview(divider)
         typeView.addSubview(minimizeButton)
@@ -81,11 +82,12 @@ extension msgsVC {
         self.typeView.addConstraintsWithFormat(hor: "", vert: "V:|-10-[v0(30)]-50-|", views: self.curLocButton)
         self.typeView.addConstraintsWithFormat(hor: "", vert: "V:|-10-[v0(30)]-50-|", views: self.cameraButton)
         self.typeView.addConstraintsWithFormat(hor: "", vert: "V:|-10-[v0(30)]-50-|", views: self.galleryButton)
-        self.typeView.addConstraintsWithFormat(hor: "", vert: "V:|-10-[v0(30)]-50-|", views: self.textField)
+        self.typeView.addConstraintsWithFormat(hor: "", vert: "V:|-10-[v0(30)]-50-|", views: self.inputBubble)
         self.typeView.addConstraintsWithFormat(hor: "", vert: "V:|-10-[v0(30)]-50-|", views: self.emojiButton)
         self.typeView.addConstraintsWithFormat(hor: "H:|[v0]|", vert: "V:|[v0(1)]", views: self.divider)
         self.typeView.addConstraintsWithFormat(hor: "H:|-10-[v0(30)]-10-[v1(30)]-10-[v2(30)]-10-[v3]-10-[v4(30)]-10-|", vert: "",
-                                               views: self.curLocButton, self.cameraButton, self.galleryButton, self.textField, self.emojiButton)
+                                               views: self.curLocButton, self.cameraButton, self.galleryButton, self.inputBubble, self.emojiButton)
+        self.inputBubble.addConstraintsWithFormat(hor: "H:|-8-[v0]|", vert: "V:|[v0]|", views: self.textField)
     }
     
     func expandedConstraints() {
@@ -94,10 +96,11 @@ extension msgsVC {
         self.cameraButton.removeFromSuperview()
         self.galleryButton.removeFromSuperview()
         self.typeView.addConstraintsWithFormat(hor: "", vert: "V:|-10-[v0(30)]-50-|", views: self.minimizeButton)
-        self.typeView.addConstraintsWithFormat(hor: "", vert: "V:|-10-[v0(30)]-50-|", views: self.textField)
+        self.typeView.addConstraintsWithFormat(hor: "", vert: "V:|-10-[v0(30)]-50-|", views: self.inputBubble)
         self.typeView.addConstraintsWithFormat(hor: "", vert: "V:|-10-[v0(30)]-50-|", views: self.emojiButton)
         self.typeView.addConstraintsWithFormat(hor: "H:|[v0]|", vert: "V:|[v0(1)]", views: self.divider)
         self.typeView.addConstraintsWithFormat(hor: "H:|-10-[v0(30)]-10-[v1]-10-[v2(30)]-10-|", vert: "",
-                                               views: self.minimizeButton, self.textField, self.emojiButton)
+                                               views: self.minimizeButton, self.inputBubble, self.emojiButton)
+        self.inputBubble.addConstraintsWithFormat(hor: "H:|-8-[v0]|", vert: "V:|[v0]|", views: self.textField)
     }
 }

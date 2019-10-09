@@ -24,11 +24,11 @@
 		4FC1B66B234B3FEB004ED1D3 /* friendCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FC1B66A234B3FEB004ED1D3 /* friendCell.swift */; };
 		4FC1B66D234B4099004ED1D3 /* messageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FC1B66C234B4099004ED1D3 /* messageCell.swift */; };
 		4FC1B66F234B474F004ED1D3 /* globals.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FC1B66E234B474F004ED1D3 /* globals.swift */; };
-		4FC1B676234B8EC9004ED1D3 /* Friend+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FC1B674234B8EC9004ED1D3 /* Friend+CoreDataProperties.swift */; };
-		4FC1B677234B8EC9004ED1D3 /* Message+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FC1B675234B8EC9004ED1D3 /* Message+CoreDataProperties.swift */; };
 		4FC1B679234C21F8004ED1D3 /* textBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FC1B678234C21F8004ED1D3 /* textBar.swift */; };
 		4FC1B67B234C5E5A004ED1D3 /* messageHandling.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FC1B67A234C5E5A004ED1D3 /* messageHandling.swift */; };
 		4FC1B67D234C5E6D004ED1D3 /* imageHandling.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FC1B67C234C5E6D004ED1D3 /* imageHandling.swift */; };
+		4FC1B680234D3509004ED1D3 /* Message+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FC1B67E234D3509004ED1D3 /* Message+CoreDataProperties.swift */; };
+		4FC1B681234D3509004ED1D3 /* Friend+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FC1B67F234D3509004ED1D3 /* Friend+CoreDataProperties.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -72,11 +72,11 @@
 		4FC1B66A234B3FEB004ED1D3 /* friendCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = friendCell.swift; sourceTree = "<group>"; };
 		4FC1B66C234B4099004ED1D3 /* messageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = messageCell.swift; sourceTree = "<group>"; };
 		4FC1B66E234B474F004ED1D3 /* globals.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = globals.swift; sourceTree = "<group>"; };
-		4FC1B674234B8EC9004ED1D3 /* Friend+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Friend+CoreDataProperties.swift"; sourceTree = "<group>"; };
-		4FC1B675234B8EC9004ED1D3 /* Message+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Message+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		4FC1B678234C21F8004ED1D3 /* textBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = textBar.swift; sourceTree = "<group>"; };
 		4FC1B67A234C5E5A004ED1D3 /* messageHandling.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = messageHandling.swift; sourceTree = "<group>"; };
 		4FC1B67C234C5E6D004ED1D3 /* imageHandling.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = imageHandling.swift; sourceTree = "<group>"; };
+		4FC1B67E234D3509004ED1D3 /* Message+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Message+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		4FC1B67F234D3509004ED1D3 /* Friend+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Friend+CoreDataProperties.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -144,8 +144,8 @@
 				4F84E65C23495AB200BAF2F4 /* SceneDelegate.swift */,
 				4F84E66523495AB300BAF2F4 /* Preview Content */,
 				4F84E65E23495AB200BAF2F4 /* messenger.xcdatamodeld */,
-				4FC1B674234B8EC9004ED1D3 /* Friend+CoreDataProperties.swift */,
-				4FC1B675234B8EC9004ED1D3 /* Message+CoreDataProperties.swift */,
+				4FC1B67E234D3509004ED1D3 /* Message+CoreDataProperties.swift */,
+				4FC1B67F234D3509004ED1D3 /* Friend+CoreDataProperties.swift */,
 				4FC1B65E234AFCA0004ED1D3 /* Message+CoreDataClass.swift */,
 				4FC1B660234AFCA0004ED1D3 /* Friend+CoreDataClass.swift */,
 			);
@@ -312,11 +312,10 @@
 			files = (
 				4F5D411423495B7A00EF64FB /* ViewController.swift in Sources */,
 				4F84E65B23495AB200BAF2F4 /* AppDelegate.swift in Sources */,
-				4FC1B676234B8EC9004ED1D3 /* Friend+CoreDataProperties.swift in Sources */,
 				4F84E65D23495AB200BAF2F4 /* SceneDelegate.swift in Sources */,
 				4FC1B67D234C5E6D004ED1D3 /* imageHandling.swift in Sources */,
 				4FC1B667234B24B8004ED1D3 /* messagesList.swift in Sources */,
-				4FC1B677234B8EC9004ED1D3 /* Message+CoreDataProperties.swift in Sources */,
+				4FC1B681234D3509004ED1D3 /* Friend+CoreDataProperties.swift in Sources */,
 				4FC1B679234C21F8004ED1D3 /* textBar.swift in Sources */,
 				4F174D33234ACB8500E9B9CF /* friendsList.swift in Sources */,
 				4FC1B669234B3F99004ED1D3 /* helpers.swift in Sources */,
@@ -324,6 +323,7 @@
 				4FC1B67B234C5E5A004ED1D3 /* messageHandling.swift in Sources */,
 				4FC1B664234AFCA0004ED1D3 /* Friend+CoreDataClass.swift in Sources */,
 				4F84E66023495AB200BAF2F4 /* messenger.xcdatamodeld in Sources */,
+				4FC1B680234D3509004ED1D3 /* Message+CoreDataProperties.swift in Sources */,
 				4FC1B662234AFCA0004ED1D3 /* Message+CoreDataClass.swift in Sources */,
 				4FC1B66D234B4099004ED1D3 /* messageCell.swift in Sources */,
 				4FC1B66B234B3FEB004ED1D3 /* friendCell.swift in Sources */,

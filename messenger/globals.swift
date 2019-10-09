@@ -11,6 +11,7 @@ import UIKit
 
 let cid = "cell"
 let day: TimeInterval = 24 * 60 * 60
+let screenW = UIScreen.main.bounds.width * 0.6
 let font14 = UIFont.systemFont(ofSize: 14)
 let font16 = UIFont.systemFont(ofSize: 16)
 let font18 = UIFont.systemFont(ofSize: 18)

@@ -18,8 +18,9 @@ extension friendsVC {
         return friend
     }
     
-    static func newMsg(friend: Friend, data: String, read: Bool = true, minutesAgo: Double, sender: Bool = true, context: NSManagedObjectContext) -> Message {
+    static func newMsg(friend: Friend, data: String, read: Bool = true, minutesAgo: Double, sender: Bool = true, type: String = "MSG", context: NSManagedObjectContext) -> Message {
         let msgData = NSEntityDescription.insertNewObject(forEntityName: "Message", into: context) as! Message
+        msgData.type = type
         msgData.data = data
         msgData.time = NSDate().addingTimeInterval(-minutesAgo*60) as Date
         msgData.read = read
@@ -46,11 +47,14 @@ extension friendsVC {
             let subra = newFriend(name: "Subra Suresh", imgName: "subra", context: context)
             _ = friendsVC.newMsg(friend: subra, data: "I am the president of CMU", minutesAgo: 23*day, context: context)
             _ = friendsVC.newMsg(friend: subra, data: "Just kidding", minutesAgo: 20*day, context: context)
-            _ = friendsVC.newMsg(friend: subra, data: "I dipped to go to Singapore", read: false, minutesAgo: 15*day, context: context)
+            _ = friendsVC.newMsg(friend: subra, data: "I dipped to go to Singapore", minutesAgo: 15*day, context: context)
+            _ = friendsVC.newMsg(friend: subra, data: "farnam", read: false, minutesAgo: 2*day, sender: false, type: "IMG", context: context)
+            _ = friendsVC.newMsg(friend: subra, data: "This is the dude who replaced you", read: false, minutesAgo: 2*day, sender: false, context: context)
             
             let tepper = newFriend(name: "David Tepper", imgName: "tepper", context: context)
             _ = friendsVC.newMsg(friend: tepper, data: "I graduated from CMU just like you!", minutesAgo: 3*day, context: context)
             _ = friendsVC.newMsg(friend: tepper, data: "The Tepper Quad is named after me", read: false, minutesAgo: 2*day, context: context)
+            _ = friendsVC.newMsg(friend: tepper, data: "tepper-quad", read: false, minutesAgo: 2*day, type: "IMG", context: context)
             
             let farnam = newFriend(name: "Farnam Jahanian", imgName: "farnam", context: context)
             _ = friendsVC.newMsg(friend: farnam, data: "Nice to meet you I am the new president of CMU. I have been a provost in the past and I look forward to getting to know you over the next coming few years", minutesAgo: 5, context: context)

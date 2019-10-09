@@ -32,9 +32,19 @@ class msgCell: cvCell {
         return view
     }()
     
+    let img: UIImageView = {
+        let view = UIImageView()
+        view.layer.cornerRadius = 15
+        view.layer.masksToBounds = true
+        view.contentMode = .scaleAspectFill
+        view.translatesAutoresizingMaskIntoConstraints = true
+        return view
+    }()
+    
     override func setupViews() {
         addSubview(bubble)
         addSubview(bubbleTrail)
         addSubview(msg)
+        addSubview(img)
     }
 }

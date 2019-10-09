@@ -33,7 +33,7 @@ extension msgsVC: UITextFieldDelegate {
             })
         }
     }
-    
+
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         print("return pressed")
         sendMsg()
@@ -44,21 +44,22 @@ extension msgsVC: UITextFieldDelegate {
         print("closing keyboard")
         textField.endEditing(true)
     }
-    
+
     func sendMsg() {
         let delegate = UIApplication.shared.delegate as? AppDelegate
         if let context = delegate?.persistentContainer.viewContext {
             if textField.text != nil && textField.text!.count > 0 {
-                let newMsg = friendsVC.newMsg(friend: friend!, data: textField.text!, minutesAgo: 0, sender: false, context: context)
+                let input = textField.text! + "        "
+                let newMsg = friendsVC.newMsg(friend: friend!, data: input, minutesAgo: 0, sender: false, context: context)
                 msgs?.append(newMsg)
                 let index = IndexPath(item: msgs!.count-1, section: 0)
                 collectionView.insertItems(at: [index])
                 collectionView.scrollToItem(at: index, at: .bottom, animated: true)
                 collectionView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 70, right: 0)
                 textField.text = nil
-                
+
                 do {
-                    // TODO: figure out why this message isn't being stored permenantly, once you go to friends screen, and return to same friend's messages, all the messages you wrote disappear
+                    //TODO: figure out why this message isn't being stored permenantly, once you go to friends screen, and return to same friend's messages, all the messages you wrote disappear
                     try(context.save())
                 } catch let err {
                     print(err)
@@ -67,3 +68,4 @@ extension msgsVC: UITextFieldDelegate {
         }
     }
 }
+
