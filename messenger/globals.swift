@@ -10,11 +10,14 @@ import Foundation
 import UIKit
 
 let cid = "cell"
+let emojiSize = 50
 let day: TimeInterval = 24 * 60 * 60
-let screenW = UIScreen.main.bounds.width * 0.6
+let screenW = UIScreen.main.bounds.width
+let screenWFrac = screenW * 0.6
 let font14 = UIFont.systemFont(ofSize: 14)
 let font16 = UIFont.systemFont(ofSize: 16)
 let font18 = UIFont.systemFont(ofSize: 18)
+let font50 = UIFont.systemFont(ofSize: 50)
 let bold14 = UIFont.boldSystemFont(ofSize: 14)
 let bold16 = UIFont.boldSystemFont(ofSize: 16)
 let bold18 = UIFont.boldSystemFont(ofSize: 18)

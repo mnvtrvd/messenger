@@ -60,6 +60,7 @@ extension msgsVC {
     
     @objc func emojiButtonClicked() {
         print("sending your emoji")
+        sendLike()
     }
 
     func adjustSize(expand: Bool) {

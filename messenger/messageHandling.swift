@@ -48,10 +48,16 @@ extension msgsVC: UITextFieldDelegate {
     func sendMsg() {
         let delegate = UIApplication.shared.delegate as? AppDelegate
         if let context = delegate?.persistentContainer.viewContext {
-            if textField.text != nil && textField.text!.count > 0 {
-                let input = textField.text! + "        "
-                let newMsg = friendsVC.newMsg(friend: friend!, data: input, minutesAgo: 0, sender: false, context: context)
-                msgs?.append(newMsg)
+            let data = textField.text
+            if data != nil && data!.count > 0 {
+                if data!.count <= 1 && data!.containsOnlyEmoji {
+                    let newMsg = friendsVC.newMsg(friend: friend!, data: data!, sender: false, type: "EMOJI", context: context)
+                    msgs?.append(newMsg)
+                } else {
+                    let input = data! + "        "
+                    let newMsg = friendsVC.newMsg(friend: friend!, data: input, sender: false, context: context)
+                    msgs?.append(newMsg)
+                }
                 let index = IndexPath(item: msgs!.count-1, section: 0)
                 collectionView.insertItems(at: [index])
                 collectionView.scrollToItem(at: index, at: .bottom, animated: true)
@@ -67,5 +73,22 @@ extension msgsVC: UITextFieldDelegate {
             }
         }
     }
-}
+    
+    func sendLike() {
+        let delegate = UIApplication.shared.delegate as? AppDelegate
+        if let context = delegate?.persistentContainer.viewContext {
+            let newMsg = friendsVC.newMsg(friend: friend!, data: "like", minutesAgo: 0, sender: false, type: "LIKE", context: context)
+            msgs?.append(newMsg)
+            let index = IndexPath(item: msgs!.count-1, section: 0)
+            collectionView.insertItems(at: [index])
+            collectionView.scrollToItem(at: index, at: .bottom, animated: true)
+            collectionView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 70, right: 0)
 
+            do {
+                try(context.save())
+            } catch let err {
+                print(err)
+            }
+        }
+    }
+}
