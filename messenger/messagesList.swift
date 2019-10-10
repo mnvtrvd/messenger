@@ -140,7 +140,7 @@ class msgsVC: UICollectionViewController, UICollectionViewDelegateFlowLayout {
             if msg.type == "MSG" {
                 setBubbleFrame(msg: msg, cell: cell, indexPath: indexPath)
             } else if msg.type == "IMG" {
-                setImgBubbleFrame(msg: msg, cell: cell, indexPath: indexPath)
+                setImgFrame(msg: msg, cell: cell, indexPath: indexPath)
             } else if msg.type == "EMOJI" {
                 setEmojiFrame(cell: cell, msg: msg, indexPath: indexPath)
             } else if msg.type == "LIKE" {
@@ -159,7 +159,7 @@ class msgsVC: UICollectionViewController, UICollectionViewDelegateFlowLayout {
             } else if msg.type == "IMG" {
                 return CGSize(width: view.frame.width, height: frame.height)
             } else if msg.type == "EMOJI" {
-                return CGSize(width: Int(screenW), height: emojiSize)
+                return CGSize(width: Int(screenW), height: emojiSize + 20)
             } else if msg.type == "LIKE" {
                 return CGSize(width: Int(screenW), height: emojiSize + 20)
             }

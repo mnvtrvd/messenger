@@ -2,7 +2,7 @@
 //  Friend+CoreDataClass.swift
 //  messenger
 //
-//  Created by Manav Trivedi on 10/7/19.
+//  Created by Manav Trivedi on 10/10/19.
 //  Copyright © 2019 E<Z<>. All rights reserved.
 //
 //

@@ -52,11 +52,12 @@ class friendsVC: UICollectionViewController, UICollectionViewDelegateFlowLayout 
     }
     
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        print("you are selecting a cell\n\n\n\n\n\n\n\n\n\n\n\n\n")
         let msgList = msgsVC(collectionViewLayout: UICollectionViewFlowLayout())
         msgList.friend = msgs?[indexPath.item].friend
         msgs?[indexPath.item].read = true
+        
         navigationController?.pushViewController(msgList, animated: true)
-        print("User tapped on item \(indexPath.row)")
     }
 }
 

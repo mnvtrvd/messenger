@@ -11,6 +11,10 @@ import UIKit
 
 extension msgsVC {
     func setBubbleFrame(msg: Message, cell: msgCell, indexPath: IndexPath) {
+        cell.msg.isHidden = false
+        cell.img.isHidden = true
+        cell.bubble.isHidden = false
+        cell.bubble.isHidden = false
         let frame = estimateSize(msg: msg)
         
         if msg.sender {
@@ -27,6 +31,10 @@ extension msgsVC {
     }
 
     func setEmojiFrame(cell: msgCell, msg: Message, indexPath: IndexPath) {
+        cell.msg.isHidden = false
+        cell.img.isHidden = true
+        cell.bubble.isHidden = true
+        cell.bubble.isHidden = true
         cell.msg.font = font50
         if msg.sender {
             cell.msg.frame = CGRect(x: 10, y: 0, width: emojiSize*msg.data!.count + 10,
@@ -38,10 +46,10 @@ extension msgsVC {
             checkNext(cell: cell, indexPath: indexPath, isSender: false)
         }
 
-//        let frame = cell.msg.frame
-//        let trailX = (msg.sender) ? frame.minX : frame.minX + frame.width - 5
-//        cell.bubbleTrail.frame = CGRect(x: trailX, y: frame.height - 5, width: 10, height: 10)
-//        cell.bubbleTrail.backgroundColor = (msg.sender) ? bubbleGray : fbSky
+        let frame = cell.msg.frame
+        let trailX = (msg.sender) ? frame.minX : frame.minX + frame.width - 5
+        cell.bubbleTrail.frame = CGRect(x: trailX, y: frame.height - 5, width: 10, height: 10)
+        cell.bubbleTrail.backgroundColor = (msg.sender) ? bubbleGray : fbSky
     }
 
     func checkNext(cell: msgCell, indexPath: IndexPath, isSender: Bool) {

@@ -162,12 +162,10 @@ class friendCell: cvCell {
         addConstraint(NSLayoutConstraint(item: info, attribute: .centerY,
                                          relatedBy: .equal, toItem: self,
                                          attribute: .centerY, multiplier: 1, constant: 0))
-
         newRead()
         newName(view: info)
         newTime(view: info)
         newMsg(view: info)
-
     }
     
     override func setupViews() {

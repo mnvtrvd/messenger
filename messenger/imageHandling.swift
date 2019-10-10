@@ -12,58 +12,68 @@ import Photos
 
 extension msgsVC: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
-
         var selectedImg: UIImage?
-
+        
         if let editedImage = info[UIImagePickerController.InfoKey.editedImage] as? UIImage {
             selectedImg = editedImage
         } else if let originalImage = info[UIImagePickerController.InfoKey.originalImage] as? UIImage {
             selectedImg = originalImage
         }
-
+        
+        guard let imgUrl = info[UIImagePickerController.InfoKey.imageURL] as? URL else { return }
+        print(imgUrl.lastPathComponent + "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n")
+        
         if selectedImg != nil {
-            // imgForMsg.image = selectedImg
+            let imgData:NSData = selectedImg!.pngData()! as NSData
+            UserDefaults.standard.set(imgData, forKey: imgUrl.lastPathComponent)
+            sendImg(imgName: imgUrl.lastPathComponent, inAssets: false)
         }
-
+        
         dismiss(animated: true, completion: nil)
     }
-    
-//    private func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
-//        if let imageURL = info[UIImagePickerControllerReferenceURL] as? URL {
-//            let result = PHAsset.fetchAssets(withALAssetURLs: [imageURL], options: nil)
-//            let asset = result.firstObject
-//            print(asset?.value(forKey: "filename"))
-//
-//        }
-//
-//        dismiss(animated: true, completion: nil)
-//    }
     
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
         dismiss(animated: true, completion: nil)
     }
     
-    func setImgBubbleFrame(msg: Message, cell: msgCell, indexPath: IndexPath) {
-        let image = UIImage(named: msg.data!)
+    func setImgFrame(msg: Message, cell: msgCell, indexPath: IndexPath) {
+        var image = UIImage()
+        if (msg.inAssets) {
+            image = UIImage(named: msg.data!)!
+        } else {
+            let data = UserDefaults.standard.object(forKey: msg.data!) as! Data
+            image = UIImage(data: data)!
+        }
+        cell.msg.isHidden = true
+        cell.img.isHidden = false
+        cell.bubble.isHidden = true
+        cell.bubble.isHidden = false
         if msg.sender {
-            cell.img.image = UIImage.setImgMsg(img: image!, x: 0, y: 0)
+            cell.img.image = UIImage.setImgMsg(img: image, x: 0, y: 0)
             cell.img.frame = CGRect(x: 20, y: 0, width: (cell.img.image?.size.width)!,
                                     height: (cell.img.image?.size.height)!)
             checkNext(cell: cell, indexPath: indexPath, isSender: true)
         } else {
-            cell.img.image = UIImage.setImgMsg(img: image!, x: view.frame.width - screenWFrac - 15, y: 0)
+            cell.img.image = UIImage.setImgMsg(img: image, x: view.frame.width - screenWFrac - 15, y: 0)
             cell.img.frame = CGRect(x: view.frame.width - screenWFrac - 15, y: 0,
                                     width: (cell.img.image?.size.width)!,
                                     height: (cell.img.image?.size.height)!)
             checkNext(cell: cell, indexPath: indexPath, isSender: false)
         }
         
-        setDetailsFrame(cell: cell, frame: cell.bubble.frame, sender: msg.sender)
+        let frame = cell.img.frame
+        let trailX = (msg.sender) ? frame.minX - 10 : screenW - 15
+        cell.bubbleTrail.frame = CGRect(x: trailX, y: frame.height - 5, width: 10, height: 10)
+        cell.bubbleTrail.backgroundColor = (msg.sender) ? bubbleGray : fbSky
     }
     
     func setLikeFrame(msg: Message, cell: msgCell, indexPath: IndexPath) {
         let image = UIImage(named: "like")
         cell.img.layer.cornerRadius = 0
+        cell.msg.isHidden = true
+        cell.img.isHidden = false
+        cell.bubble.isHidden = true
+        cell.bubble.isHidden = true
         if msg.sender {
             cell.img.image = UIImage.setImgMsg(img: image!, x: 0, y: 0)
             cell.img.frame = CGRect(x: 20, y: 0, width: emojiSize + 10, height: emojiSize + 20)
@@ -93,20 +103,26 @@ extension msgsVC: UIImagePickerControllerDelegate, UINavigationControllerDelegat
     }
     
     func getImgSize(msg: Message) -> CGRect {
-        let image = UIImage(named: msg.data!)
+        var image = UIImage()
+        if (msg.inAssets) {
+            image = UIImage(named: msg.data!)!
+        } else {
+            let data = UserDefaults.standard.object(forKey: msg.data!) as! Data
+            image = UIImage(data: data)!
+        }
         if msg.sender {
-            let resized = UIImage.setImgMsg(img: image!, x: 0, y: 0)
+            let resized = UIImage.setImgMsg(img: image, x: 0, y: 0)
             return CGRect(x: 20, y: 0, width: resized.size.width, height: resized.size.height)
         } else {
-            let resized = UIImage.setImgMsg(img: image!, x: view.frame.width - screenWFrac - 15, y: 0)
+            let resized = UIImage.setImgMsg(img: image, x: view.frame.width - screenWFrac - 15, y: 0)
             return CGRect(x: view.frame.width - screenWFrac - 15, y: 0, width: resized.size.width, height: resized.size.height)
         }
     }
 
-    func sendImg(imgName: String) {
+    func sendImg(imgName: String, inAssets: Bool = true) {
         let delegate = UIApplication.shared.delegate as? AppDelegate
         if let context = delegate?.persistentContainer.viewContext {
-            let newMsg = friendsVC.newMsg(friend: friend!, data: imgName, minutesAgo: 0, sender: false, type: "IMG", context: context)
+            let newMsg = friendsVC.newMsg(friend: friend!, data: imgName, minutesAgo: 0, sender: false, type: "IMG", inAssets: inAssets, context: context)
             msgs?.append(newMsg)
             let index = IndexPath(item: msgs!.count-1, section: 0)
             collectionView.insertItems(at: [index])
