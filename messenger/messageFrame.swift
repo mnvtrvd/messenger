@@ -46,10 +46,10 @@ extension msgsVC {
             checkNext(cell: cell, indexPath: indexPath, isSender: false)
         }
 
-        let frame = cell.msg.frame
-        let trailX = (msg.sender) ? frame.minX : frame.minX + frame.width - 5
-        cell.bubbleTrail.frame = CGRect(x: trailX, y: frame.height - 5, width: 10, height: 10)
-        cell.bubbleTrail.backgroundColor = (msg.sender) ? bubbleGray : fbSky
+//        let frame = cell.msg.frame
+//        let trailX = (msg.sender) ? frame.minX : frame.minX + frame.width - 5
+//        cell.bubbleTrail.frame = CGRect(x: trailX, y: frame.height - 5, width: 10, height: 10)
+//        cell.bubbleTrail.backgroundColor = (msg.sender) ? bubbleGray : fbSky
     }
 
     func checkNext(cell: msgCell, indexPath: IndexPath, isSender: Bool) {
@@ -66,7 +66,7 @@ extension msgsVC {
         cell.msg.frame = CGRect(x: frame.minX + 10, y: frame.minY, width: frame.width - 20, height: frame.height - 10)
         cell.bubble.backgroundColor = (sender) ? bubbleGray : fbSky
         cell.msg.textColor = (sender) ? .black : .white
-        setDetailsFrame(cell: cell, frame: frame, sender: sender)
+//        setDetailsFrame(cell: cell, frame: frame, sender: sender)
     }
 
     func setDetailsFrame(cell: msgCell, frame: CGRect, sender: Bool) {

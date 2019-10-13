@@ -119,6 +119,7 @@ class msgsVC: UICollectionViewController, UICollectionViewDelegateFlowLayout {
         
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardDetection), name: UIResponder.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardDetection), name: UIResponder.keyboardWillHideNotification, object: nil)
+        scrollToBottom()
     }
     
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {

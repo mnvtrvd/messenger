@@ -28,7 +28,7 @@ extension msgsVC: UITextFieldDelegate {
             UIView.animate(withDuration: 0, delay: 0, options: UIView.AnimationOptions.curveEaseOut, animations: {
                 self.view.layoutIfNeeded()
             }, completion: { (completed) in
-                let lastItem = NSIndexPath(item: self.msgs!.count - 1, section: 0) as IndexPath
+                let lastItem = IndexPath(item: self.msgs!.count - 1, section: 0)
                 self.collectionView?.scrollToItem(at: lastItem, at: .bottom, animated: true)
             })
         }
@@ -49,6 +49,7 @@ extension msgsVC: UITextFieldDelegate {
         let delegate = UIApplication.shared.delegate as? AppDelegate
         if let context = delegate?.persistentContainer.viewContext {
             let data = textField.text
+            
             if data != nil && data!.count > 0 {
                 if data!.count <= 1 && data!.containsOnlyEmoji {
                     let newMsg = friendsVC.newMsg(friend: friend!, data: data!, sender: false, type: "EMOJI", context: context)
@@ -58,15 +59,11 @@ extension msgsVC: UITextFieldDelegate {
                     let newMsg = friendsVC.newMsg(friend: friend!, data: input, sender: false, context: context)
                     msgs?.append(newMsg)
                 }
-                let index = IndexPath(item: msgs!.count-1, section: 0)
-                collectionView.insertItems(at: [index])
-                collectionView.scrollToItem(at: index, at: .bottom, animated: true)
-                collectionView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 70, right: 0)
+                scrollToBottom()
                 textField.text = nil
 
                 do {
-                    //TODO: figure out why this message isn't being stored permenantly, once you go to friends screen, and return to same friend's messages, all the messages you wrote disappear
-                    try(context.save())
+                    try context.save()
                 } catch let err {
                     print(err)
                 }
@@ -79,16 +76,23 @@ extension msgsVC: UITextFieldDelegate {
         if let context = delegate?.persistentContainer.viewContext {
             let newMsg = friendsVC.newMsg(friend: friend!, data: "like", minutesAgo: 0, sender: false, type: "LIKE", context: context)
             msgs?.append(newMsg)
-            let index = IndexPath(item: msgs!.count-1, section: 0)
-            collectionView.insertItems(at: [index])
-            collectionView.scrollToItem(at: index, at: .bottom, animated: true)
-            collectionView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 70, right: 0)
+            scrollToBottom()
 
             do {
-                try(context.save())
+                try context.save()
             } catch let err {
                 print(err)
             }
         }
+    }
+    
+    func scrollToBottom() {
+        let index = IndexPath(item: msgs!.count-1, section: 0)
+        collectionView.insertItems(at: [index])
+        collectionView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 70, right: 0)
+        collectionView.scrollToItem(at: index, at: .bottom, animated: true)
+        
+//        let lastItem = IndexPath(item: self.msgs!.count - 1, section: 0)
+//        self.collectionView?.scrollToItem(at: lastItem, at: .bottom, animated: true)
     }
 }

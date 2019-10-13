@@ -21,7 +21,6 @@ extension msgsVC: UIImagePickerControllerDelegate, UINavigationControllerDelegat
         }
         
         guard let imgUrl = info[UIImagePickerController.InfoKey.imageURL] as? URL else { return }
-        print(imgUrl.lastPathComponent + "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n")
         
         if selectedImg != nil {
             let imgData:NSData = selectedImg!.pngData()! as NSData
@@ -61,10 +60,10 @@ extension msgsVC: UIImagePickerControllerDelegate, UINavigationControllerDelegat
             checkNext(cell: cell, indexPath: indexPath, isSender: false)
         }
         
-        let frame = cell.img.frame
-        let trailX = (msg.sender) ? frame.minX - 10 : screenW - 15
-        cell.bubbleTrail.frame = CGRect(x: trailX, y: frame.height - 5, width: 10, height: 10)
-        cell.bubbleTrail.backgroundColor = (msg.sender) ? bubbleGray : fbSky
+//        let frame = cell.img.frame
+//        let trailX = (msg.sender) ? frame.minX - 10 : screenW - 15
+//        cell.bubbleTrail.frame = CGRect(x: trailX, y: frame.height - 5, width: 10, height: 10)
+//        cell.bubbleTrail.backgroundColor = (msg.sender) ? bubbleGray : fbSky
     }
     
     func setLikeFrame(msg: Message, cell: msgCell, indexPath: IndexPath) {
@@ -124,13 +123,10 @@ extension msgsVC: UIImagePickerControllerDelegate, UINavigationControllerDelegat
         if let context = delegate?.persistentContainer.viewContext {
             let newMsg = friendsVC.newMsg(friend: friend!, data: imgName, minutesAgo: 0, sender: false, type: "IMG", inAssets: inAssets, context: context)
             msgs?.append(newMsg)
-            let index = IndexPath(item: msgs!.count-1, section: 0)
-            collectionView.insertItems(at: [index])
-            collectionView.scrollToItem(at: index, at: .bottom, animated: true)
-            collectionView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 70, right: 0)
+            scrollToBottom()
 
             do {
-                try(context.save())
+                try context.save()
             } catch let err {
                 print(err)
             }
