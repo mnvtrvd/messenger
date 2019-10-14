@@ -31,8 +31,9 @@ extension friendsVC {
     }
     
     func setData() {
+    // uncomment, recomplile, comment out, and recompile again to clear core data and messages stored on device
 //        clearData()
-        
+    
         let delegate = UIApplication.shared.delegate as? AppDelegate
         if let context = delegate?.persistentContainer.viewContext {
             if entityEmpty(context: context, entity: "Friend") {
@@ -61,6 +62,7 @@ extension friendsVC {
         
     }
     
+    // images commented out because sometime leads to bugs when running on personal device, image sharing is still possible however
     func initData(context: NSManagedObjectContext) {
         let carnegie = newFriend(name: "Andrew Carnegie", imgName: "carnegie", context: context)
         _ = friendsVC.newMsg(friend: carnegie, data: "My heart is in the work!", minutesAgo: 3*390*day+2, context: context)
@@ -76,14 +78,14 @@ extension friendsVC {
         _ = friendsVC.newMsg(friend: subra, data: "I am the president of CMU", minutesAgo: 23*day, context: context)
         _ = friendsVC.newMsg(friend: subra, data: "jk", minutesAgo: 20*day, context: context)
         _ = friendsVC.newMsg(friend: subra, data: "I dipped to go to Singapore", minutesAgo: 15*day, context: context)
-        _ = friendsVC.newMsg(friend: subra, data: "farnam", read: false, minutesAgo: 2*day, sender: false, type: "IMG", context: context)
+//        _ = friendsVC.newMsg(friend: subra, data: "farnam", read: false, minutesAgo: 2*day, sender: false, type: "IMG", context: context)
         _ = friendsVC.newMsg(friend: subra, data: "This dude replaced you        ", minutesAgo: 2*day, sender: false, context: context)
         _ = friendsVC.newMsg(friend: subra, data: "😂", read: false, minutesAgo: 2*day, type: "EMOJI", context: context)
         
         let tepper = newFriend(name: "David Tepper", imgName: "tepper", context: context)
         _ = friendsVC.newMsg(friend: tepper, data: "I graduated from CMU just like you!", minutesAgo: 3*day, context: context)
         _ = friendsVC.newMsg(friend: tepper, data: "The Tepper Quad is named after me", read: false, minutesAgo: 2*day, context: context)
-        _ = friendsVC.newMsg(friend: tepper, data: "tepper-quad", read: false, minutesAgo: 2*day, type: "IMG", context: context)
+//        _ = friendsVC.newMsg(friend: tepper, data: "tepper-quad", read: false, minutesAgo: 2*day, type: "IMG", context: context)
         
         let farnam = newFriend(name: "Farnam Jahanian", imgName: "farnam", context: context)
         _ = friendsVC.newMsg(friend: farnam, data: "Nice to meet you I am the new president of CMU. I have been a provost in the past and I look forward to getting to know you over the next coming few years", minutesAgo: 5, context: context)
@@ -114,17 +116,21 @@ extension friendsVC {
         }
     }
     
-//    func simulate(friend: Friend, context: NSManagedObjectContext) {
-//        let delegate = UIApplication.shared.delegate as? AppDelegate
-//        if let context = delegate?.persistentContainer.viewContext {
-//            _ = friendsVC.newMsg(friend: friend, data: "This is a simulated message", minutesAgo: 0, context: context)
-//            do {
-//                try context.save()
-//            } catch let err {
-//                print(err)
-//            }
-//        }
-//    }
+    static func simulate(friend: Friend, context: NSManagedObjectContext) -> Message {
+        let delegate = UIApplication.shared.delegate as? AppDelegate
+        if let context = delegate?.persistentContainer.viewContext {
+            let sim = friendsVC.newMsg(friend: friend, data: "This is a simulated message", minutesAgo: 0, context: context)
+            do {
+                try context.save()
+            } catch let err {
+                print(err)
+            }
+            
+            return sim
+        }
+        
+        return Message()
+    }
     
     func clearData() {
         let delegate = UIApplication.shared.delegate as? AppDelegate

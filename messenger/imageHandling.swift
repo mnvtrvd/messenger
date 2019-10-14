@@ -24,6 +24,7 @@ extension msgsVC: UIImagePickerControllerDelegate, UINavigationControllerDelegat
         
         if selectedImg != nil {
             let imgData:NSData = selectedImg!.pngData()! as NSData
+            // PLEASE CHANGE THIS ASAP, THIS IS A HORRIBLE USE OF NSUSERDEFAULTS
             UserDefaults.standard.set(imgData, forKey: imgUrl.lastPathComponent)
             sendImg(imgName: imgUrl.lastPathComponent, inAssets: false)
         }
@@ -40,6 +41,7 @@ extension msgsVC: UIImagePickerControllerDelegate, UINavigationControllerDelegat
         if (msg.inAssets) {
             image = UIImage(named: msg.data!)!
         } else {
+            // PLEASE CHANGE THIS ASAP, THIS IS A HORRIBLE USE OF NSUSERDEFAULTS
             let data = UserDefaults.standard.object(forKey: msg.data!) as! Data
             image = UIImage(data: data)!
         }
@@ -60,6 +62,7 @@ extension msgsVC: UIImagePickerControllerDelegate, UINavigationControllerDelegat
             checkNext(cell: cell, indexPath: indexPath, isSender: false)
         }
         
+        // used for bubble trails, but it is kind of buggy, so i got rid of it temporarily
 //        let frame = cell.img.frame
 //        let trailX = (msg.sender) ? frame.minX - 10 : screenW - 15
 //        cell.bubbleTrail.frame = CGRect(x: trailX, y: frame.height - 5, width: 10, height: 10)

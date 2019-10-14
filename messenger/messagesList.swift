@@ -134,9 +134,6 @@ class msgsVC: UICollectionViewController, UICollectionViewDelegateFlowLayout {
         
         cell.msg.text = msgs?[indexPath.item].data
 
-//        if let imgName = msgs?[indexPath.item].friend?.profImg {
-
-//            cell.imgName.image = UIImage(named: imgName)
         if let msg = msgs?[indexPath.item] {
             if msg.type == "MSG" {
                 setBubbleFrame(msg: msg, cell: cell, indexPath: indexPath)

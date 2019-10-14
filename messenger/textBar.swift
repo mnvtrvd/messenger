@@ -32,6 +32,7 @@ extension msgsVC {
         textField.addTarget(self, action: #selector(textFieldChanged), for: UIControl.Event.editingChanged)
     }
     
+    // current does not do anything, show map view in area occupied by keyboard
     @objc func locButtonClicked() {
         print("opening map view")
     }
@@ -41,12 +42,14 @@ extension msgsVC {
         adjustSize(expand: false)
     }
     
+    // current does not do anything, link camera to app using imagepicker
     @objc func camButtonClicked() {
         print("opening the camera now")
     }
     
     @objc func galleryButtonClicked() {
         print("opening the gallery now")
+        // uncomment to allow editing
 //        gallery.allowsEditing = true
         gallery.sourceType = .photoLibrary
         gallery.mediaTypes = UIImagePickerController.availableMediaTypes(for: .photoLibrary)!

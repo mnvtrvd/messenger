@@ -114,11 +114,7 @@ class friendCell: cvCell {
                                          relatedBy: .equal, toItem: self,
                                          attribute: .bottom, multiplier: 1, constant: 0))
         
-//        if (msgLabel.text?.count > 32) {
-//            view.addConstraintsWithFormat(hor: "H:|[v0(230)]-10-[v1(80)]", vert: "V:|[v0]|", views: msgLabel, timeLabel)
-//        } else {
-            view.addConstraintsWithFormat(hor: "H:|[v0]-10-[v1(80)]|", vert: "V:|[v0]|", views: msgLabel, timeLabel)
-//        }
+        view.addConstraintsWithFormat(hor: "H:|[v0]-10-[v1(80)]|", vert: "V:|[v0]|", views: msgLabel, timeLabel)
     }
     
     let timeLabel: UILabel = {

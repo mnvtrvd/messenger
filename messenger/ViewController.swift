@@ -28,7 +28,23 @@ class friendsVC: UICollectionViewController, UICollectionViewDelegateFlowLayout 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         setData()
+        
+        for cell in collectionView.visibleCells as! [friendCell] {
+            cell.setupViews()
+        }
     }
+    
+//    func refreshCells() {
+//        let len = msgs?.count as! IndexPath
+//
+//        for indexPath in len {
+//            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cid, for: indexPath) as! friendCell
+//
+//            if let msg = msgs?[indexPath.item] {
+//                cell.setupViews()
+//            }
+//        }
+//    }
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cid, for: indexPath) as! friendCell
@@ -52,7 +68,6 @@ class friendsVC: UICollectionViewController, UICollectionViewDelegateFlowLayout 
     }
     
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        print("you are selecting a cell\n\n\n\n\n\n\n\n\n\n\n\n\n")
         let msgList = msgsVC(collectionViewLayout: UICollectionViewFlowLayout())
         msgList.friend = msgs?[indexPath.item].friend
         msgs?[indexPath.item].read = true

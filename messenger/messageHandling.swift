@@ -54,6 +54,9 @@ extension msgsVC: UITextFieldDelegate {
                 if data!.count <= 1 && data!.containsOnlyEmoji {
                     let newMsg = friendsVC.newMsg(friend: friend!, data: data!, sender: false, type: "EMOJI", context: context)
                     msgs?.append(newMsg)
+                } else if data == "sim" {
+                    let newMsg = friendsVC.simulate(friend: friend!, context: context)
+                    msgs?.append(newMsg)
                 } else {
                     let input = data! + "        "
                     let newMsg = friendsVC.newMsg(friend: friend!, data: input, sender: false, context: context)
@@ -92,6 +95,7 @@ extension msgsVC: UITextFieldDelegate {
         collectionView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 70, right: 0)
         collectionView.scrollToItem(at: index, at: .bottom, animated: true)
         
+        // second way of calling this, may help fix small ui bug
 //        let lastItem = IndexPath(item: self.msgs!.count - 1, section: 0)
 //        self.collectionView?.scrollToItem(at: lastItem, at: .bottom, animated: true)
     }
