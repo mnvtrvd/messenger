@@ -28,6 +28,7 @@ class friendsVC: UICollectionViewController, UICollectionViewDelegateFlowLayout 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         setData()
+        collectionView.reloadData()
         
         for cell in collectionView.visibleCells as! [friendCell] {
             cell.setupViews()
